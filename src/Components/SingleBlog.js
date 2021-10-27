@@ -1,11 +1,13 @@
-import React,{useEffect, useState} from 'react'
+import React,{useContext, useEffect, useState} from 'react'
 import { useParams } from 'react-router'
 import axios from 'axios'
-import { Typography ,CircularProgress, CardMedia,Card, CardContent, createTheme,IconButton } from '@mui/material';
+import { Typography ,CircularProgress, CardMedia,Card, CardContent, createTheme,IconButton, ThemeProvider, Paper } from '@mui/material';
 import {makeStyles} from '@mui/styles'
 import { Box } from '@mui/system';
 import HomeIcon from "@mui/icons-material/Home";
 import { useHistory } from 'react-router';
+import { FirebaseContext } from '../Firebase/AuthProvider';
+import Brightness4Icon from "@mui/icons-material/Brightness4";
     const theme=createTheme()
  const useStyles = makeStyles(() => ({
    loading: {
@@ -16,6 +18,18 @@ import { useHistory } from 'react-router';
  card:{
      margin:theme.spacing(5)
  },
+ paper:{
+   width:'100%',
+   height:'100vh'
+ }
+ ,
+  dark: {
+    position: "absolute",
+    right: 0,
+    top: 0,
+    margin: theme.spacing(1),
+    marginLeft: theme.spacing(2),
+  },
   home: {
     position: "absolute",
     top: 0,
@@ -26,6 +40,7 @@ import { useHistory } from 'react-router';
 
 
 const SingleBlog = () => {
+  const {themeset,darkMode,setDarkMode}=useContext(FirebaseContext)
     const history=useHistory()
             const classes=useStyles()
         const { id } = useParams();
@@ -44,47 +59,59 @@ const SingleBlog = () => {
                setLoading(false);
              })
              .catch((err) => {
-               setTimeout(searchBlog, 4000);
+                setTimeout(searchBlog, 4000);
+              
              });
          };
          searchBlog();
          return()=>{
              setBlog()
+             setLoading(true)
          }
     },[id])
-    console.log(blog)
+    
     return loading ? (
       <div className={classes.loading}>
         <CircularProgress />
       </div>
     ) : (
-      <div>
-        <div className={classes.home}>
-          <IconButton color="secondary" onClick={() => history.push("/")}>
-            <HomeIcon fontSize={"large"} />
-          </IconButton>
-        </div>
-        <Typography align="center" variant="h2" color="secondary">
-          {blog.title}
-        </Typography>
-        <Typography align="center" variant="subtitle2" color="gray">
-          <Box fontStyle={"italic"}> {blog.creator} </Box>
-        </Typography>
-        <Typography align="center" variant="subtitle2" color="gray">
-          <Box fontStyle="italic">{blog.date}</Box>
-        </Typography>
-        <Card className={classes.card}>
-          <CardMedia
-            component="img"
-            height="400"
-            alt="Blog Cover"
-            image={blog.imageURL}
-          />
-          <CardContent>
-            <Typography>{blog.content}</Typography>
-          </CardContent>
-        </Card>
-      </div>
+      <ThemeProvider theme={themeset}>
+        <Paper className={classes.paper}>
+          <div className={classes.home}>
+            <IconButton color="secondary" onClick={() => history.push("/")}>
+              <HomeIcon fontSize={"large"} />
+            </IconButton>
+          </div>
+          <div className={classes.dark}>
+            <IconButton
+              color="secondary"
+              onClick={() => setDarkMode(!darkMode)}
+            >
+              <Brightness4Icon fontSize="large" />
+            </IconButton>
+          </div>
+          <Typography align="center" variant="h2" color="secondary">
+            {blog.title}
+          </Typography>
+          <Typography align="center" variant="subtitle2" color="gray">
+            <Box fontStyle={"italic"}> {blog.creator} </Box>
+          </Typography>
+          <Typography align="center" variant="subtitle2" color="gray">
+            <Box fontStyle="italic">{blog.date}</Box>
+          </Typography>
+          <Card className={classes.card}>
+            <CardMedia
+              component="img"
+              height="400"
+              alt="Blog Cover"
+              image={blog.imageURL}
+            />
+            <CardContent>
+              <Typography>{blog.content}</Typography>
+            </CardContent>
+          </Card>
+        </Paper>
+      </ThemeProvider>
     );
 }
 

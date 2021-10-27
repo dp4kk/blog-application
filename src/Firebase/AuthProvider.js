@@ -2,6 +2,9 @@ import React, { createContext, useEffect, useState } from 'react'
 import {auth} from './Firebase'
 import axios from 'axios';
 import 'firebase/compat/auth'
+import { createTheme } from '@mui/material/styles';
+
+
 
 export const FirebaseContext=createContext()
 const AuthProvider = ({children}) => {
@@ -12,11 +15,20 @@ const AuthProvider = ({children}) => {
     const [blogs,setBlogs]=useState([])
     const [displayBlog,setDisplayBlog]=useState([])
     const [loading,setLoading]=useState(true)
-
+    const [query,setQuery]=useState('')
+    const [darkMode,setDarkMode]=useState(true)
     const signup=(email,password)=>{
         return auth.createUserWithEmailAndPassword(email,password)
     }
-
+    //
+    const themeset = createTheme({
+      palette: {
+        mode: darkMode ? 'dark' : 'light'
+      },
+    });
+    if(currentUser){
+    console.log(currentUser.displayName)
+    }
     const login=(email,password)=>{
         return auth.signInWithEmailAndPassword(email,password)
     }
@@ -63,16 +75,31 @@ const AuthProvider = ({children}) => {
                setDisplayBlog([])
            }
        },[blogs])
-            console.log(blogs)          
-            console.log(displayBlog)
+        
     useEffect(()=>{
         const unsubscribe=auth.onAuthStateChanged(user=>{
             setCurrentUser(user)
+            if(userName!==''){
+            user.updateProfile({
+                displayName:userName
+            }).then(()=>{console.log(user)}).catch(err=>console.log(err))}
             setLoading(false)
         })
         return unsubscribe
+        //eslint-disable-next-line
     },[])
-        const contexts={currentUser,signup,login,logout,error,setError,open,setOpen,userName,setUserName,blogs,setBlogs,displayBlog}
+
+
+    useEffect(()=>{
+        if(userName!==''){
+            currentUser.updateProfile({
+                displayName:userName
+            }).then(()=>{console.log(currentUser)}).catch(err=>console.log(err))}
+        }
+        
+    ,[userName,currentUser])
+
+        const contexts={currentUser,signup,login,logout,error,setError,open,setOpen,userName,setUserName,blogs,setBlogs,displayBlog,query,setQuery,darkMode,setDarkMode,themeset}
     return (
         <FirebaseContext.Provider value={contexts}>
             {!loading && children}

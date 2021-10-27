@@ -8,6 +8,7 @@ import WriteBlog from './Components/WriteBlog'
 import { CssBaseline } from '@mui/material'
 import SingleBlog from './Components/SingleBlog'
 import PrivateRoute from './Firebase/PrivateRoute'
+import Profile from './Pages/Profile'
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <PrivateRoute exact path='/' component={Dashboard}/>
           <PrivateRoute path='/write' component={WriteBlog}/>
           <PrivateRoute path='/blog/:id' component={SingleBlog}/>
+          <PrivateRoute path='/profile' component={Profile}/>
        </Switch>
     </Router> 
       </AuthProvider>
