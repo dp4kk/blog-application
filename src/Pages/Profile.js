@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
   },
   paper: {
     width: "100%",
-    height: "100vh",
+    minHeight: "100vh",
   },
   dark: {
     position: "absolute",
