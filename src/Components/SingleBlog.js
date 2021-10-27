@@ -20,7 +20,7 @@ import Brightness4Icon from "@mui/icons-material/Brightness4";
  },
  paper:{
    width:'100%',
-   height:'100vh'
+   minHeight:'100vh'
  }
  ,
   dark: {
