@@ -32,6 +32,21 @@ const useStyles = makeStyles(() => ({
     width: "100%",
     minHeight: "100vh",
   },
+    const theme=createTheme()
+ const useStyles = makeStyles(() => ({
+   loading: {
+     top: "50%",
+     left: "50%",
+     position: "absolute",
+   },
+ card:{
+     margin:theme.spacing(5)
+ },
+ paper:{
+   width:'100%',
+   minHeight:'100vh'
+ }
+ ,
   dark: {
     position: "absolute",
     right: 0,
@@ -122,4 +137,8 @@ const SingleBlog = () => {
   );
 };
 
+<<<<<<< HEAD
 export default SingleBlog;
+=======
+export default SingleBlog
+>>>>>>> 20a561df33b209c6fee8932f209f79c2c675da1a
