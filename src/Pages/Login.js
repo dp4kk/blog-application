@@ -62,6 +62,10 @@ const SignIn=()=> {
         setPassword('')
   };
 
+  const handleGuestCredential=()=>{
+    setEmail('guesttest01@gmail.com')
+    setPassword('guesttest01')
+  }
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -115,12 +119,20 @@ const SignIn=()=> {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 0 }}
             >
               Login
             </Button>
+            <Button
+              type="button"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 1, mb: 2 }}
+              onClick={handleGuestCredential}
+            >
+              Guest credentials
+            </Button>
             <Grid container>
-              
               <Grid item>
                 <Link href="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
@@ -147,7 +159,7 @@ const SignIn=()=> {
           onClose={handleClose}
           anchorOrigin={{ horizontal: "center", vertical: "top" }}
         >
-            <Alert severity='success'>Logged In</Alert>
+          <Alert severity="success">Logged In</Alert>
         </Snackbar>
       )}
     </ThemeProvider>

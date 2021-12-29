@@ -65,7 +65,7 @@ const useStyles = makeStyles(() => ({
 const WriteBlog = () => {
     const history=useHistory()
     const classes=useStyles()
-    const {currentUser,themeset,darkMode,setDarkMode}=useContext(FirebaseContext)
+    const {currentUser,themeset,darkMode,setDarkMode,toggle,setToggle}=useContext(FirebaseContext)
     const [topic,setTopic]=useState('')
     const [content,setContent]=useState('')
     const [imageUrl,setImageUrl]=useState('')
@@ -84,11 +84,13 @@ const WriteBlog = () => {
           .then((res) => {
             history.push("/");
             // window.location.reload();
+            setToggle(!toggle)
           })
           .catch((err) => {
             console.log(err.response);
              history.push("/");
             // window.location.reload();
+            setToggle(!toggle)
           });
     }
 

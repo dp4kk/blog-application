@@ -23,18 +23,22 @@ const useStyles = makeStyles(() => ({
     minHeight: "100vh",
   },
   grid: {
-    marginLeft: theme.spacing(5),
+    
+    padding:theme.spacing(4),
+    marginLeft:theme.spacing(12)
   },
 }));
 const BlogsDisplay = () => {
   const classes = useStyles();
   const { displayBlog, query, themeset } = useContext(FirebaseContext);
-  console.log(displayBlog);
+  
+  const defaultURL =
+    "https://images.unsplash.com/photo-1452421822248-d4c2b47f0c81?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80";
 
   return (
     <ThemeProvider theme={themeset}>
       <Paper className={classes.root}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} className={classes.grid}>
           {displayBlog
             .filter((val) => {
               if (query === "") {
@@ -44,12 +48,12 @@ const BlogsDisplay = () => {
               ) {
                 return val;
               }
-              return false
+              return false;
             })
             .map((blog) => {
               return (
                 <Grid item xs={4} key={blog.id}>
-                  <Card sx={{ maxWidth: 400 }}>
+                  <Card sx={{ maxWidth: 420 }} variant='elevation' elevation={5}>
                     <CardHeader
                       title={
                         <Typography align="left" variant="h5" color="secondary">
@@ -70,7 +74,7 @@ const BlogsDisplay = () => {
                       component="img"
                       height="200"
                       alt="Blog Cover"
-                      image={blog.imageUrl}
+                      image={blog.imageUrl ? blog.imageUrl : defaultURL}
                     />
                     <CardContent>
                       <Typography
