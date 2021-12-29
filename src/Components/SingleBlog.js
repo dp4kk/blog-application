@@ -18,20 +18,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import { useHistory } from "react-router";
 import { FirebaseContext } from "../Firebase/AuthProvider";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
-const theme = createTheme();
-const useStyles = makeStyles(() => ({
-  loading: {
-    top: "50%",
-    left: "50%",
-    position: "absolute",
-  },
-  card: {
-    padding: theme.spacing(5),
-  },
-  paper: {
-    width: "100%",
-    minHeight: "100vh",
-  },
+
     const theme=createTheme()
  const useStyles = makeStyles(() => ({
    loading: {
@@ -137,8 +124,7 @@ const SingleBlog = () => {
   );
 };
 
-<<<<<<< HEAD
 export default SingleBlog;
-=======
-export default SingleBlog
->>>>>>> 20a561df33b209c6fee8932f209f79c2c675da1a
+
+
+
